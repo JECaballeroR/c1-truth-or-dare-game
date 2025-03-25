@@ -115,11 +115,12 @@ with col1:
     if st.button("🎯 TRUTH", use_container_width=True):
         get_random_item("truth")
         # Resultado actual
-        st.markdown("### 👇 TRUTH to tell us...:")
 with col2:
     if st.button("🔥 DARE", use_container_width=True):
         get_random_item("dare")
-        st.markdown("### 👇 DARE to show us...:")
+
+
+st.markdown("### 👇 Do/answers the following:")
 
 
 if st.session_state.last_item:
