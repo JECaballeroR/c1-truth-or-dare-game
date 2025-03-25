@@ -1,10 +1,18 @@
 import streamlit as st
 import random
 
-# Configuración inicial
+# Configuración de página
 st.set_page_config(page_title="Truth or Dare", layout="wide")
 
-# Banco de preguntas y retos
+# Títulos de cabecera
+st.title("🎉 C1's Marketing Team Truth or Dare")
+st.markdown("""
+*Just in case someone can't think of something to ask, we also have this nice app to give us some!  
+They are SFW and Zoom-friendly!*  
+---
+""")
+
+# Banco original
 truths = [
     "What’s your most unusual remote work habit?",
     "Have you ever stayed in pajamas all day while working?",
@@ -82,41 +90,44 @@ if "last_item" not in st.session_state:
 # Funciones
 def get_random_item(category):
     if category == "truth":
-        if len(st.session_state.remaining_truths)>0:
-            return "No more TRUTHs left! Click 'Restart Bank' to refresh."
-        else:
-            item = random.choice(st.session_state.remaining_truths)
-            st.session_state.remaining_truths.remove(item)
+        if len(st.session_state.remaining_truths) == 0:
+            st.session_state.last_item = "⚠️ No more TRUTHs left! Click '🔄 Re-start question bank' to refresh."
+            return
+        item = random.choice(st.session_state.remaining_truths)
+        st.session_state.remaining_truths.remove(item)
     else:
-        if len(st.session_state.remaining_dares)>0:
-            return "No more DAREs left! Click 'Restart Bank' to refresh."
-        else:
-            item = random.choice(st.session_state.remaining_dares)
-            st.session_state.remaining_dares.remove(item)
+        if len(st.session_state.remaining_dares) == 0:
+            st.session_state.last_item = "⚠️ No more DAREs left! Click '🔄 Re-start question bank' to refresh."
+            return
+        item = random.choice(st.session_state.remaining_dares)
+        st.session_state.remaining_dares.remove(item)
     st.session_state.last_item = item
 
 def restart_banks():
     st.session_state.remaining_truths = truths.copy()
     st.session_state.remaining_dares = dares.copy()
     st.session_state.last_item = ""
-st.markdown("# C1's marketing team Truth or Dare")
-st.markdown("Just in case someone can't think of something to ask, we also have this nice app to give us some! They are SFW and Zoom-friendly!")
 
-# Layout
+# Layout de botones grandes
 col1, col2 = st.columns(2)
 with col1:
-    if st.button("🎯 TRUTH", use_container_width=True):
+    st.markdown("### 🎯")
+    if st.button("🟣 TRUTH", use_container_width=True):
         get_random_item("truth")
 with col2:
-    if st.button("🔥 DARE", use_container_width=True):
+    st.markdown("### 🔥")
+    if st.button("🟠 DARE", use_container_width=True):
         get_random_item("dare")
 
-st.markdown("### 👇 Your prompt:")
-st.info(st.session_state.last_item or "Click on TRUTH or DARE to begin!", icon="💬")
+# Resultado actual
+st.markdown("### 👇 Prompt generado:")
+if st.session_state.last_item:
+    st.info(st.session_state.last_item, icon="💬")
+else:
+    st.info("Click on TRUTH or DARE to begin!", icon="💬")
 
-# Botón de reinicio
+# Botón para reiniciar
 st.markdown("---")
 if st.button("🔄 Re-start question bank"):
     restart_banks()
     st.success("Done!")
-
