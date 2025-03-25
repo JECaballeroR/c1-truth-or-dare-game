@@ -120,7 +120,7 @@ with col2:
         get_random_item("dare")
 
 
-st.markdown("### 👇 Do/answers the following:")
+st.markdown("### 👇 Do/answer the following:")
 
 
 if st.session_state.last_item:
