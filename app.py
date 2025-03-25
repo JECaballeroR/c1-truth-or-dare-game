@@ -111,12 +111,11 @@ def restart_banks():
 # Layout de botones grandes
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown("### 🎯")
-    if st.button("🟣 TRUTH", use_container_width=True):
+  
+    if st.button("🎯 TRUTH", use_container_width=True):
         get_random_item("truth")
 with col2:
-    st.markdown("### 🔥")
-    if st.button("🟠 DARE", use_container_width=True):
+    if st.button("🔥 DARE", use_container_width=True):
         get_random_item("dare")
 
 # Resultado actual
